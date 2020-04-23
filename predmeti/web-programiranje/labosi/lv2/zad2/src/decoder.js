@@ -32,7 +32,20 @@ class Decoder {
    * Rješenje zadatka definirajte unutar metode bruteForce
    */
 
-  bruteForce(str, counter) {}
+  bruteForce(str, counter) {
+    if(counter === 0) throw new Error('Could not find shift key')
+    const decodedForCounter = this.decode(str, counter)
+    if(this.hasWordFromDictionary(decodedForCounter)) return counter
+    return this.bruteForce(str, counter - 1)
+  }
+  
+  hasWordFromDictionary(str) {
+    let foundWordCounter = 0
+    for(const word of dictionary) {
+      if(str.includes(word)) foundWordCounter ++
+    }
+    return foundWordCounter > 1 // potrebna provjera jer jedan prijasnji slucaj sadrzi rijec "ste", pa program misli da je to rjesenje
+  }
 }
 
 export default Decoder;

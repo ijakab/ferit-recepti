@@ -12,6 +12,10 @@ console.log(result)
  * - Zaljepite enkriptirani tekst i dobiveni ključ
  */
 
+try {
  let key = test.bruteForce("Yoxsl7mljldxl7pf7ylyfgr7abpfcofoxq7lsr7mlorhr", 100);
  console.log(key);
- 
+ console.log(test.decode('Yoxsl7mljldxl7pf7ylyfgr7abpfcofoxq7lsr7mlorhr', key))
+} catch (e) {
+ console.error(e)
+}
