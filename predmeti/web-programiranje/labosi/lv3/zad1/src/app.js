@@ -131,6 +131,7 @@ window.onload = function () {
     
         load() {
             this.fightButton = document.getElementById('generateFight')
+            this.vsDisplay = document.getElementById('vs-display')
             this.checkFightEnabled()
             this.registerFightClickEvent()
         }
@@ -144,9 +145,28 @@ window.onload = function () {
             this.fightButton.addEventListener('click', e => this.click(), false)
         }
         
-        click() {
+        async click() {
             if(!this.fightEnabled) throw 'Fight is disabled'
+            await this.countDown()
+            this.fight()
+        }
+        
+        fight() {
             console.log('fight')
+        }
+        
+        countDown() {
+            return new Promise(resolve => {
+                let counter = 3
+                const interval = setInterval(_ => {
+                    this.vsDisplay.innerText = `${counter}`
+                    if(counter === 0) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                    counter --
+                }, 1000)
+            })
         }
     }
     
