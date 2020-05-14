@@ -9,6 +9,7 @@ window.onload = function () {
         }
         
         load() {
+            this.systemMessageElement = document.getElementsByTagName('h2')[0]
             const leftElements = document.getElementById("fighters-left").children
             const rightElements = document.getElementById("fighters-right").children
             const leftSide = document.getElementById('firstSide')
@@ -85,6 +86,10 @@ window.onload = function () {
                 }
             }
         }
+        
+        addMessage(message) {
+            this.systemMessageElement.innerText = message
+        }
     }
     
     class Cat {
@@ -97,6 +102,21 @@ window.onload = function () {
             const rawData = this.leftElement.getAttribute('data-info')
             this.info = JSON.parse(rawData)
             this.imageSource = this.leftElement.getElementsByTagName('img')[0].getAttribute('src')
+        }
+        
+        win() {
+            this.info.record.wins ++
+            this.saveInfo()
+        }
+        
+        loss() {
+            this.info.record.loss ++
+            this.saveInfo()
+        }
+        
+        saveInfo() {
+            this.leftElement.setAttribute('data-info', JSON.stringify(this.info))
+            this.rightElement.setAttribute('data-info', JSON.stringify(this.info))
         }
     }
     
@@ -136,6 +156,20 @@ window.onload = function () {
             this.skillsElement.innerText = this.cat.info.catInfo
             this.recordElement.innerText = `Wins: ${this.cat.info.record.wins} Loss: ${this.cat.info.record.loss}`
         }
+        
+        win() {
+            this.imgElement.classList.remove('loss-border')
+            this.imgElement.classList.remove('win-border')
+            this.imgElement.classList.add('win-border')
+            this.cat.win()
+        }
+    
+        loss() {
+            this.imgElement.classList.remove('loss-border')
+            this.imgElement.classList.remove('win-border')
+            this.imgElement.classList.add('loss-border')
+            this.cat.loss()
+        }
     }
     
     class Fight {
@@ -146,7 +180,6 @@ window.onload = function () {
     
         load() {
             this.fightButton = document.getElementById('generateFight')
-            this.vsDisplay = document.getElementById('vs-display')
             this.checkFightEnabled()
             this.registerFightClickEvent()
         }
@@ -167,7 +200,40 @@ window.onload = function () {
         }
         
         fight() {
-            console.log('fight')
+            const leftSide = this.app.leftCats[this.app.selectedLeft]
+            const rightSide = this.app.leftCats[this.app.selectedRight]
+            const leftRecord = leftSide.cat.info.record
+            const rightRecord = rightSide.cat.info.record
+            const leftPercentage = leftRecord.wins / (leftRecord.wins + leftRecord.loss)
+            const rightPercentage = rightRecord.wins / (rightRecord.wins + rightRecord.loss)
+            const diff = Math.abs(leftPercentage - rightPercentage)
+            const bias = diff < 0.1 ? 0.1 : 0.2
+            const margin = 0.5 + bias
+            console.log('margin is ', margin)
+            const generatedNumber = Math.random()
+            
+            if(leftPercentage > rightPercentage) {
+                if(generatedNumber < margin) this.win('left')
+                else this.win('right')
+            } else {
+                if(generatedNumber < margin) this.win('right')
+                else this.win('left')
+            }
+        }
+        
+        win(side) {
+            let winningCatSide
+            let otherCatSide
+            if(side === 'left') {
+                winningCatSide = this.app.leftCats[this.app.selectedLeft]
+                otherCatSide = this.app.rightCats[this.app.selectedRight]
+            } else {
+                winningCatSide = this.app.rightCats[this.app.selectedRight]
+                otherCatSide = this.app.leftCats[this.app.selectedLeft]
+            }
+            winningCatSide.win()
+            otherCatSide.loss()
+            this.app.addMessage(`The winner is ${winningCatSide.cat.info.name}`)
         }
         
         countDown() {
@@ -175,7 +241,7 @@ window.onload = function () {
                 this.app.disableAll()
                 let counter = 3
                 const interval = setInterval(_ => {
-                    this.vsDisplay.innerText = `${counter}`
+                    this.app.addMessage(counter)
                     if(counter === 0) {
                         clearInterval(interval)
                         this.app.restore()
