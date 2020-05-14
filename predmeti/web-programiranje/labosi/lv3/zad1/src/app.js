@@ -4,7 +4,8 @@ window.onload = function () {
             this.leftCats = []
             this.rightCats = []
             this.selectedLeft = -1
-            this.seletedRigh = -1
+            this.selectedRight = -1
+            this.fight = new Fight(this)
         }
         
         load() {
@@ -23,6 +24,7 @@ window.onload = function () {
                 this.rightCats.push(rightCatSide)
             }
             this.allCats = [...this.rightCats, ...this.leftCats]
+            this.fight.load()
             this.registerCatClickEvents(this.allCats)
             this.registerRandomClickEvent()
         }
@@ -43,8 +45,9 @@ window.onload = function () {
             if(leftIndex !== -1) {
                 this.selectedLeft = this.handleSide(this.leftCats, this.rightCats, this.selectedLeft, leftIndex)
             } else if (rightIndex !== -1) {
-                this.seletedRigh = this.handleSide(this.rightCats, this.leftCats, this.seletedRigh, rightIndex)
+                this.selectedRight = this.handleSide(this.rightCats, this.leftCats, this.selectedRight, rightIndex)
             }
+            this.fight.checkFightEnabled()
         }
         
         clickRandomFighter() {
@@ -55,7 +58,8 @@ window.onload = function () {
                 right = Math.floor(Math.random() * 6)
             }
             if(left !== this.selectedLeft) this.selectedLeft = this.handleSide(this.leftCats, this.rightCats, this.selectedLeft, left)
-            if(right !== this.seletedRigh) this.seletedRigh = this.handleSide(this.rightCats, this.leftCats, this.seletedRigh, right)
+            if(right !== this.selectedRight) this.selectedRight = this.handleSide(this.rightCats, this.leftCats, this.selectedRight, right)
+            this.fight.checkFightEnabled()
         }
         
         handleSide(clickedSideCats, otherSideCats, previousIndexClickedSide, index) {
@@ -116,6 +120,33 @@ window.onload = function () {
             this.ageElement.innerText = this.cat.info.age
             this.skillsElement.innerText = this.cat.info.catInfo
             this.recordElement.innerText = `Wins: ${this.cat.info.record.wins} Loss: ${this.cat.info.record.loss}`
+        }
+    }
+    
+    class Fight {
+        constructor(app) {
+            this.fightEnabled = false
+            this.app = app
+        }
+    
+        load() {
+            this.fightButton = document.getElementById('generateFight')
+            this.checkFightEnabled()
+            this.registerFightClickEvent()
+        }
+    
+        checkFightEnabled() {
+            this.fightEnabled = Boolean(this.app.selectedLeft !== -1 && this.app.selectedRight !== -1)
+            this.fightButton.disabled = !this.fightEnabled
+        }
+    
+        registerFightClickEvent() {
+            this.fightButton.addEventListener('click', e => this.click(), false)
+        }
+        
+        click() {
+            if(!this.fightEnabled) throw 'Fight is disabled'
+            console.log('fight')
         }
     }
     
