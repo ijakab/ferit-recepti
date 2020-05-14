@@ -54,8 +54,8 @@ window.onload = function () {
             let left = 0;
             let right = 0;
             while (left === right || left > 5 || right > 5) {
-                left = Math.floor(Math.random() * 6)
-                right = Math.floor(Math.random() * 6)
+                left = Math.floor(Math.random() * this.leftCats.length)
+                right = Math.floor(Math.random() * this.leftCats.length)
             }
             if(left !== this.selectedLeft) this.selectedLeft = this.handleSide(this.leftCats, this.rightCats, this.selectedLeft, left)
             if(right !== this.selectedRight) this.selectedRight = this.handleSide(this.rightCats, this.leftCats, this.selectedRight, right)
@@ -69,6 +69,21 @@ window.onload = function () {
             clickedSideCats[index].disableClick()
             otherSideCats[index].disableClick()
             return index
+        }
+        
+        disableAll() {
+            for(const cat of this.allCats) {
+                cat.disableClick()
+            }
+        }
+        
+        restore() {
+            for(let i = 0; i < this.leftCats.length; i++) {
+                if(i !== this.selectedLeft && i !== this.selectedRight) {
+                    this.leftCats[i].enableClick()
+                    this.rightCats[i].enableClick()
+                }
+            }
         }
     }
     
@@ -157,11 +172,13 @@ window.onload = function () {
         
         countDown() {
             return new Promise(resolve => {
+                this.app.disableAll()
                 let counter = 3
                 const interval = setInterval(_ => {
                     this.vsDisplay.innerText = `${counter}`
                     if(counter === 0) {
                         clearInterval(interval)
+                        this.app.restore()
                         resolve()
                     }
                     counter --
