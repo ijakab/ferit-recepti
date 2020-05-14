@@ -24,12 +24,17 @@ window.onload = function () {
             }
             this.allCats = [...this.rightCats, ...this.leftCats]
             this.registerCatClickEvents(this.allCats)
+            this.registerRandomClickEvent()
         }
         
         registerCatClickEvents(catSides) {
             for(const catSide of catSides) {
                 catSide.element.addEventListener('click', e => this.clickCat(catSide), false)
             }
+        }
+        
+        registerRandomClickEvent() {
+            document.getElementById("randomFight").addEventListener('click', e => this.clickRandomFighter(), false)
         }
         
         clickCat(catSide) {
@@ -40,6 +45,17 @@ window.onload = function () {
             } else if (rightIndex !== -1) {
                 this.seletedRigh = this.handleSide(this.rightCats, this.leftCats, this.seletedRigh, rightIndex)
             }
+        }
+        
+        clickRandomFighter() {
+            let left = 0;
+            let right = 0;
+            while (left === right || left > 5 || right > 5) {
+                left = Math.floor(Math.random() * 6)
+                right = Math.floor(Math.random() * 6)
+            }
+            if(left !== this.selectedLeft) this.selectedLeft = this.handleSide(this.leftCats, this.rightCats, this.selectedLeft, left)
+            if(right !== this.seletedRigh) this.seletedRigh = this.handleSide(this.rightCats, this.leftCats, this.seletedRigh, right)
         }
         
         handleSide(clickedSideCats, otherSideCats, previousIndexClickedSide, index) {
