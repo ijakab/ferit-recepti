@@ -67,7 +67,7 @@ window.onload = function () {
             clickedSideCats[index].click()
             if(previousIndexClickedSide !== -1) clickedSideCats[previousIndexClickedSide].enableClick()
             if(previousIndexClickedSide !== -1) otherSideCats[previousIndexClickedSide].enableClick()
-            clickedSideCats[index].disableClick()
+            clickedSideCats[index].makeSelected()
             otherSideCats[index].disableClick()
             return index
         }
@@ -102,6 +102,11 @@ window.onload = function () {
             const rawData = this.leftElement.getAttribute('data-info')
             this.info = JSON.parse(rawData)
             this.imageSource = this.leftElement.getElementsByTagName('img')[0].getAttribute('src')
+    
+            const imageOverlay = document.createElement('div')
+            imageOverlay.classList.add('image_overlay')
+            this.leftElement.appendChild(imageOverlay.cloneNode())
+            this.rightElement.appendChild(imageOverlay)
         }
         
         win() {
@@ -139,6 +144,7 @@ window.onload = function () {
         enableClick() {
             this.clickEnabled = true
             this.element.classList.remove('disabled')
+            this.element.classList.remove('selected')
             this.element.classList.add('enabled')
         }
         
@@ -146,6 +152,11 @@ window.onload = function () {
             this.clickEnabled = false
             this.element.classList.remove('enabled')
             this.element.classList.add('disabled')
+        }
+        
+        makeSelected() {
+            this.element.classList.remove('disabled')
+            this.element.classList.add('selected')
         }
         
         click() {
