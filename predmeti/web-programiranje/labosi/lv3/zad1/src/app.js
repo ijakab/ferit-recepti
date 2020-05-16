@@ -17,8 +17,8 @@ window.onload = function () {
             for(let i = 0; i < leftElements.length; i++) {
                 const cat = new Cat(leftElements[i], rightElements[i])
                 cat.load()
-                const leftCatSide = new CatSide(leftSide, leftElements[i], cat)
-                const rightCatSide = new CatSide(rightSide, rightElements[i], cat)
+                const leftCatSide = new CatSide(leftSide, leftElements[i], cat, this)
+                const rightCatSide = new CatSide(rightSide, rightElements[i], cat, this)
                 leftCatSide.load()
                 rightCatSide.load()
                 this.leftCats.push(leftCatSide)
@@ -80,9 +80,11 @@ window.onload = function () {
         
         restore() {
             for(let i = 0; i < this.leftCats.length; i++) {
-                if(i !== this.selectedLeft && i !== this.selectedRight) {
-                    this.leftCats[i].enableClick()
+                if(i !== this.selectedLeft) {
                     this.rightCats[i].enableClick()
+                }
+                if(i !== this.selectedRight) {
+                    this.leftCats[i].enableClick()
                 }
             }
         }
@@ -126,10 +128,11 @@ window.onload = function () {
     }
     
     class CatSide {
-        constructor(sideElement, element, cat) {
+        constructor(sideElement, element, cat, app) {
             this.cat = cat
             this.element = element
             this.sideElement = sideElement
+            this.app = app
             this.enableClick()
         }
         
@@ -165,6 +168,14 @@ window.onload = function () {
             this.nameElement.innerText = this.cat.info.name
             this.ageElement.innerText = this.cat.info.age
             this.skillsElement.innerText = this.cat.info.catInfo
+            this.updateRecord()
+    
+            this.imgElement.classList.remove('win-border')
+            this.imgElement.classList.remove('loss-border')
+            this.app.addMessage('Choose your cat')
+        }
+        
+        updateRecord() {
             this.recordElement.innerText = `Wins: ${this.cat.info.record.wins} Loss: ${this.cat.info.record.loss}`
         }
         
@@ -173,6 +184,7 @@ window.onload = function () {
             this.imgElement.classList.remove('win-border')
             this.imgElement.classList.add('win-border')
             this.cat.win()
+            this.updateRecord()
         }
     
         loss() {
@@ -180,6 +192,7 @@ window.onload = function () {
             this.imgElement.classList.remove('win-border')
             this.imgElement.classList.add('loss-border')
             this.cat.loss()
+            this.updateRecord()
         }
     }
     
