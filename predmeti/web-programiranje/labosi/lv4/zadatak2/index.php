@@ -4,9 +4,7 @@ echo "Zadatak 2" . "<br /><br />\n";
 
 function is_anagram($word1, $word2)
 {
-    /**
-     * Ovdje ide kod zadatka
-     */
+    return count_chars($word1, 1) == count_chars($word2, 1);
 }
 
 /**
