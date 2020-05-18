@@ -38,6 +38,6 @@ var_dump(zeroSorter([5, 6, '0', 1, 0, '0', 8, '0']) == [5, 6, 1, 8, '0', 0, '0',
 var_dump(zeroSorter([5, null, '0', 1, 0, '0', false, 9, '0']) == [5, null, 1, false, 9, '0', 0, '0', '0']);
 
 /**
- * Test 4 - Definirajte i prikažite jedan primjer
+ * Test 4 - Funkcija ne bi trebala promijeniti redosljed ako je vec ispravan
  */
-var_dump(zeroSorter([5, null, '0']) == [5, null, '0']);
+var_dump(zeroSorter([5, 2, '0']) == [5, 2, '0']);
