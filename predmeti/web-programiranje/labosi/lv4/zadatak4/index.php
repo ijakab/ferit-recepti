@@ -4,9 +4,30 @@ echo "Zadatak 4" . "<br /><br />\n";
 
 function zeroSorter($array)
 {
-    /**
-     * Rješenje zadatke ide ovdje
-     */
+   $iterationNum = count($array);
+   $newArray = [];
+   for($iteration = 0; $iteration < $iterationNum; $iteration++) {
+        $item = $array[$iteration];
+        if(is_null($item) || is_bool($item)) {
+            return false;
+        }
+
+   }
+
+   for($iteration = 0; $iteration < $iterationNum; $iteration++) {
+       $item = $array[$iteration];
+       if($item != 0 || $item != '0') {
+          array_push($newArray, $item);
+       }
+   }
+
+   for($iteration = 0; $iteration < $iterationNum; $iteration++) {
+       $item = $array[$iteration];
+       if($item == 0 || $item == '0') {
+          array_push($newArray, $item);
+       }
+  }
+   return $newArray;
 }
 
 // Test 1
@@ -19,3 +40,4 @@ var_dump(zeroSorter([5, null, '0', 1, 0, '0', false, 9, '0']) == [5, null, 1, fa
 /**
  * Test 4 - Definirajte i prikažite jedan primjer
  */
+var_dump(zeroSorter([5, null, '0']) == [5, null, '0']);
