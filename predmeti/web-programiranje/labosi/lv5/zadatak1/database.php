@@ -28,6 +28,39 @@ class Database {
         return $finalArr;
     }
 
+    public function Insert($table, $data) {
+        $sql = 'insert into ' . $table . '(';
+        foreach ($data as $key => $value) {
+            $sql = $sql . $key . ', ';
+        }
+        $sql = substr($sql, 0, -2); // remove last ,
+        $sql = $sql . ') values (';
+        foreach ($data as $value) {
+            $sql = $sql . '?, ';
+        }
+        $sql = substr($sql, 0, -2); // remove last ,
+        $sql = $sql . ")";
+        $stmt = mysqli_prepare($this->connection, $sql);
+        $types = str_repeat('s', count($data));
+        mysqli_stmt_bind_param($stmt, $types, ...array_values($data));
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+    public function Update($table, $data, $id) {
+        $sql = 'update ' . $table . ' set ';
+        foreach ($data as $key => $value) {
+            $sql = $sql . $key . ' = ?, ';
+        }
+        $sql = substr($sql, 0, -2);
+        $sql = $sql . " where id = " . $id;
+        $stmt = mysqli_prepare($this->connection, $sql);
+        $types = str_repeat('s', count($data));
+        mysqli_stmt_bind_param($stmt, $types, ...array_values($data));
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
     public function CloseConnection() {
         mysqli_close($this->connection);
     }

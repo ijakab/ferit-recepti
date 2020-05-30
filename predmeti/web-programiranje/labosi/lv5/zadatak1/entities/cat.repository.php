@@ -49,6 +49,29 @@ class CatRepository {
         ];
     }
 
+    public function createOrUpdate($data) { //this data could be fetched directly with $_POST, but I find php super-global variables super-idiotic
+        // this would normally be split, however suits for this app
+        // this would be sanitized and escaped, and XSS attacks
+        $subset = $this->getValidSubset($data);
+        if ($data['id']) {
+            $this->db->Update('cats', $subset, $data['id']);
+        } else {
+            $this->db->Insert('cats', $subset);
+        }
+    }
+
+    public function getValidSubset($data) {
+        return [
+            'name' => $data['name'],
+            'age' => $data['age'],
+            'info' => $data['info'],
+            'loss' => $data['loss'],
+            'wins' => $data['wins'],
+            'image' => 'bhjsh'
+        ];
+
+    }
+
     public function applyFight($winId, $lossId) {
         // normally, we would make sure cats exists and escape values, as this can cause sql injection.
         $this->db->Query("update cats set wins = wins + 1 where id = " . $winId);
