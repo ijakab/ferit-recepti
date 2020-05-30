@@ -33,6 +33,22 @@ class CatRepository {
         return $this->db->Select("SELECT * FROM cats");
     }
 
+    public function getOne($id) {
+        // this should be escaped to prevent injection
+        $res = $this->db->Select("SELECT * FROM cats where id = " . $id);
+        return $res[0];
+    }
+
+    public function createEmpty() {
+        return [
+            "age" => 0,
+            "info" => "",
+            "name" => "",
+            "wins" => 0,
+            "loss" => 0
+        ];
+    }
+
     public function applyFight($winId, $lossId) {
         // normally, we would make sure cats exists and escape values, as this can cause sql injection.
         $this->db->Query("update cats set wins = wins + 1 where id = " . $winId);

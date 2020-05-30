@@ -1,6 +1,6 @@
 <?php
 
-require 'start.php';
+require '../start.php';
 
 $winId = $_POST['wins'];
 $lossId = $_POST['loss'];
