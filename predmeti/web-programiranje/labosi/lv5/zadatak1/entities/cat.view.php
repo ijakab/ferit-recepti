@@ -30,6 +30,7 @@ class CatView {
                                 }
                             }'>
                 <img src="<?php echo $cat['image']?>" alt="<?php echo $cat['name']?>" width="150" height="150">
+                <a href="form.php?id=<?php echo $cat['id'] ?>" class="btn btn-sm btn-light edit-btn">Edit</a>
             </div>
         </div>
         <?php

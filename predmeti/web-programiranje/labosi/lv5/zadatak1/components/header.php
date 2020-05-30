@@ -50,6 +50,16 @@ require_once '../start.php';
         .loss-border {
             border: 10px solid red;
         }
+
+        .fighter-box {
+            position: relative;
+        }
+        .fighter-box .edit-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            z-index: 9;
+        }
     </style>
 </head>
 <body>
