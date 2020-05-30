@@ -1,6 +1,7 @@
 <?php
+namespace Cat;
 
-class CatRepository {
+class CatRepository implements IRepository {
     private $seeded = false;
     private $db;
 
@@ -29,11 +30,11 @@ class CatRepository {
         $this->seeded = true;
     }
 
-    public function getAll() {
+    public function getAll(): array {
         return $this->db->Select("SELECT * FROM cats");
     }
 
-    public function getOne($id) {
+    public function getOne($id): array {
         // this should be escaped to prevent injection
         $res = $this->db->Select("SELECT * FROM cats where id = " . $id);
         return $res[0];

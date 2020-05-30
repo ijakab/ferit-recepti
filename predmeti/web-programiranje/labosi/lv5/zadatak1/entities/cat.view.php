@@ -1,4 +1,5 @@
 <?php
+namespace Cat;
 
 class CatView {
     private $repository;
