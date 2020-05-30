@@ -61,15 +61,18 @@ class CatRepository {
     }
 
     public function getValidSubset($data) {
-        return [
+        // validation logic could go here, e.g. everything is required, but all fields are not nullable anyway. still better to validate here.
+        $subset = [
             'name' => $data['name'],
             'age' => $data['age'],
             'info' => $data['info'],
             'loss' => $data['loss'],
-            'wins' => $data['wins'],
-            'image' => 'bhjsh'
+            'wins' => $data['wins']
         ];
-
+        if($data['image']) { // new image wont always be sent
+            $subset['image'] = $data['image'];
+        }
+        return $subset;
     }
 
     public function applyFight($winId, $lossId) {

@@ -11,7 +11,7 @@ if($_GET['id']) {
 ?>
 
 <div id="container" class="container">
-    <form action="form_action.php" method="post">
+    <form action="form_action.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" value="<?php echo $attributes['name'] ?>" required>
@@ -33,6 +33,10 @@ if($_GET['id']) {
                 <div class="col">
                     <label for="age">Age</label>
                     <input type="number" class="form-control" id="age" name="age" value="<?php echo $attributes['age'] ?>" required>
+                </div>
+                <div class="col">
+                    <label for="age">Image</label>
+                    <input type="file" class="form-control" id="image" name="imageHolder" <?php if(!$_GET['id']) { echo 'required'; } ?>>
                 </div>
             </div>
         </div>
