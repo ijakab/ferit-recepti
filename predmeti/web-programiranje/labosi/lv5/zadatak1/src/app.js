@@ -233,7 +233,6 @@ window.onload = function () {
             const diff = Math.abs(leftPercentage - rightPercentage)
             const bias = diff < 0.1 ? 0.1 : 0.2
             const margin = 0.5 + bias
-            console.log('margin is ', margin)
             const generatedNumber = Math.random()
             
             if(leftPercentage > rightPercentage) {
@@ -258,6 +257,17 @@ window.onload = function () {
             winningCatSide.win()
             otherCatSide.loss()
             this.app.addMessage(`The winner is ${winningCatSide.cat.info.name}`)
+            this.sendInfoToServer(winningCatSide, otherCatSide)
+        }
+
+        sendInfoToServer(winningCatSide, otherCatSide) {
+            const formData = new FormData();
+            formData.append('wins', winningCatSide.cat.info.id);
+            formData.append('loss', otherCatSide.cat.info.id);
+            fetch('/fight.php', {
+                method: 'POST',
+                body: formData
+            })
         }
         
         countDown() {
@@ -279,7 +289,5 @@ window.onload = function () {
     
     const app = new App()
     app.load()
-    console.log(app)
-    
-    
+
 }

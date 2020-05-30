@@ -32,6 +32,12 @@ class CatRepository {
     public function getAll() {
         return $this->db->Select("SELECT * FROM cats");
     }
+
+    public function applyFight($winId, $lossId) {
+        // normally, we would make sure cats exists and escape values, as this can cause sql injection.
+        $this->db->Query("update cats set wins = wins + 1 where id = " . $winId);
+        $this->db->Query("update cats set loss = loss + 1 where id = " . $lossId);
+    }
 }
 
 ?>
