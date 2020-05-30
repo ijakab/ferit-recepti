@@ -16,12 +16,21 @@ class Database {
     }
 
     public function Query($query) {
-        mysqli_query($this->connection, $query) or $this->error();
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function Select($query) {
+        $res = $this->Query($query);
+        $finalArr = [];
+        while($row = mysqli_fetch_assoc($res)) {
+            array_push($finalArr, $row);
+        }
+        return $finalArr;
     }
 
     public function CloseConnection() {
         mysqli_close($this->connection);
     }
-} 
+}
 
 ?>

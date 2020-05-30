@@ -28,6 +28,10 @@ class CatRepository {
         $this->db->Query("insert into cats values ('', 'Caterson CatSpyder Silva', 5, 'Slim, broke leg in past years', 34, 18, 'img/cat02.png')");
         $this->seeded = true;
     }
+
+    public function getAll() {
+        return $this->db->Select("SELECT * FROM cats");
+    }
 }
 
 ?>
