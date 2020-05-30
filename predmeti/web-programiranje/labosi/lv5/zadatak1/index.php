@@ -11,6 +11,42 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <style>
+
+        .fighter-list .disabled {
+            width: 150px;
+            height: 150px;
+            position:relative;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .fighter-list .disabled img {
+            max-width:100%;
+            max-height:100%;
+        }
+
+        .fighter-list .disabled .image_overlay{
+            position:absolute;
+            top:0;
+            left:0;
+            bottom:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.4);
+        }
+
+        .fighter-list .selected img {
+            border: 5px solid black;
+        }
+        .win-border {
+            border: 10px solid green;
+        }
+        .loss-border {
+            border: 10px solid red;
+        }
+    </style>
 </head>
 <body>
     <section class="container d-flex flex-column  align-items-center mb-4">
@@ -36,7 +72,7 @@
                     <img class="featured-cat-fighter-image img-rounded" src="https://via.placeholder.com/300" alt="Featured cat fighter">
                 </div>
                 <div class="col-auto w-100" style="margin-top: 24px">
-                    <div class="row fighter-list">
+                    <div class="row fighter-list" id="fighters-left">
                         <div class="col-md-4 mb-1">
                             <div class="fighter-box"
                             data-info = '{
@@ -127,7 +163,7 @@
             </div>
         </div>
         <div class="col-2 d-flex flex-column align-items-center">
-            <p class="display-4">VS</p>
+            <p class="display-4" id="vs-display">VS</p>
             <button id="generateFight" class="btn btn-primary mb-4 btn-lg">Fight</button>
             <button id="randomFight" class="btn btn-secondary">Select Random fighters</button>
         </div>
@@ -145,7 +181,7 @@
                     </ul>
                 </div>
                 <div class="col-auto w-100" style="margin-top: 24px">
-                    <div class="row fighter-list">
+                    <div class="row fighter-list" id="fighters-right">
                         <div class="col-md-4 mb-1">
                             <div class="fighter-box"
                             data-info = '{
