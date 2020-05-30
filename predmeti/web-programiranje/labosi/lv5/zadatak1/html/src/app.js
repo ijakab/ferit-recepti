@@ -28,6 +28,7 @@ window.onload = function () {
             this.fight.load()
             this.registerCatClickEvents(this.allCats)
             this.registerRandomClickEvent()
+            this.formButtons = document.getElementsByClassName('cat-form')
         }
         
         registerCatClickEvents(catSides) {
@@ -71,14 +72,24 @@ window.onload = function () {
             otherSideCats[index].disableClick()
             return index
         }
-        
+
+        disableFormButtonsListener(e)  {
+            e.preventDefault()
+        }
+
         disableAll() {
+            for(const formButton of this.formButtons) {
+                formButton.addEventListener('click', this.disableFormButtonsListener, false)
+            }
             for(const cat of this.allCats) {
                 cat.disableClick()
             }
         }
         
         restore() {
+            for(const formButton of this.formButtons) {
+                formButton.removeEventListener('click', this.disableFormButtonsListener)
+            }
             for(let i = 0; i < this.leftCats.length; i++) {
                 if(i !== this.selectedLeft) {
                     this.rightCats[i].enableClick()

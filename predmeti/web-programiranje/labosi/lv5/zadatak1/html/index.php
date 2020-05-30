@@ -21,7 +21,7 @@
                     </ul>
                 </div>
                 <div class="col-auto featured-cat-fighter">
-                    <img class="featured-cat-fighter-image img-rounded" src="https://via.placeholder.com/300" alt="Featured cat fighter">
+                    <img class="featured-cat-fighter-image img-rounded" src="https://via.placeholder.com/300" width="300" height="300" alt="Featured cat fighter">
                 </div>
                 <div class="col-auto w-100" style="margin-top: 24px">
                     <div class="row fighter-list" id="fighters-left">
@@ -35,12 +35,12 @@
             <button id="generateFight" class="btn btn-primary mb-4 btn-lg">Fight</button>
             <button id="randomFight" class="btn btn-secondary">Select Random fighters</button>
             <br>
-            <a class="btn btn-warning mb-4 btn-md" href="form.php">Add new fighter</a>
+            <a class="btn btn-warning mb-4 btn-md cat-form" href="form.php">Add new fighter</a>
         </div>
         <div id="secondSide" class="container d-flex flex-column align-items-center side second-side col-5">
             <div class="row">
                 <div class="col-auto featured-cat-fighter">
-                    <img class="featured-cat-fighter-image img-rounded" src="https://via.placeholder.com/300" alt="Featured cat fighter">
+                    <img class="featured-cat-fighter-image img-rounded" src="https://via.placeholder.com/300" width="300" height="300" alt="Featured cat fighter">
                 </div>
                 <div class="col-auto">
                     <ul class="cat-info list-group">
@@ -58,6 +58,6 @@
             </div>
         </div>
     </div>
-    <script src="app.js"></script>
+    <script src="src/app.js?noCache=<?php echo time() ?>"></script>
 
 <?php require_once '../components/footer.php' ?>
