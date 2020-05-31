@@ -8,6 +8,8 @@ interface IRepository {
     public function getOne($id): array;
 
     public function createOrUpdate($data);
+
+    public function delete($id);
 }
 
 ?>

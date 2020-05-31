@@ -60,6 +60,12 @@ require_once '../start.php';
             left: 5px;
             z-index: 9;
         }
+        .fighter-box .delete-btn {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            z-index: 9;
+        }
     </style>
 </head>
 <body>

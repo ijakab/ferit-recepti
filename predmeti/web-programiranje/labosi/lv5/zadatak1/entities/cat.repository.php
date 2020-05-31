@@ -81,6 +81,13 @@ class CatRepository implements IRepository {
         $this->db->Query("update cats set wins = wins + 1 where id = " . $winId);
         $this->db->Query("update cats set loss = loss + 1 where id = " . $lossId);
     }
+
+    public function delete($id)
+    {
+        // this is open for sql injection
+        $this->db->Query("delete from cats where id = " . $id);
+        // we could also delete the image
+    }
 }
 
 ?>
